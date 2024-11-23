@@ -1,0 +1,21 @@
+pipeline {
+    agent { label 'dev' }
+    parameters {
+        choice(
+            name: 'ACTION',
+            choices: ['up', 'down'],
+            description: 'Choose whether to bring Docker Compose services up or down'
+        )
+    }
+    stages {
+        stage('Build and Push Docker Image') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'dockerid', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
+                    sh '''
+                    docker compose ${ACTION}
+                    '''
+                }
+            }
+        }   
+    }
+}
