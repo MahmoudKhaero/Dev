@@ -12,7 +12,7 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerid', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
                     sh '''
-                    docker-compose ${ACTION}
+                    docker compose ${ACTION}
                     '''
                 }
             }
